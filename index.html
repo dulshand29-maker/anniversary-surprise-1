@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Our Love 💕</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Segoe UI',sans-serif;
+    color:black;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* VIDEO BACKGROUND */
+video{
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+}
+
+/* GLASS EFFECT */
+.container{
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.1);
+    margin:30px;
+    padding:30px;
+    border-radius:20px;
+}
+
+/* TITLES */
+h1{font-size:40px;}
+h2{margin-bottom:10px;}
+
+/* HEART */
+.heart{
+    font-size:60px;
+    animation:beat 1s infinite;
+}
+@keyframes beat{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+/* TYPING */
+.typing{
+    font-size:20px;
+    border-right:2px solid white;
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+/* GALLERY */
+.gallery img{
+    width:180px;
+    height:230px;
+    border-radius:15px;
+    margin:10px;
+    object-fit:cover;
+    transition:0.3s;
+}
+.gallery img:hover{transform:scale(1.1);}
+
+/* BUTTON */
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:#ff6b81;
+    margin:10px;
+    cursor:pointer;
+}
+
+/* POPUP */
+.popup{
+    position:fixed;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    background:white;
+    color:#333;
+    padding:20px;
+    border-radius:15px;
+    display:none;
+}
+
+/* LOCK SCREEN */
+#lock{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:#ff9a9e;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+/* FIREWORKS */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div id="lock">
+    <h2>Enter Password 💕</h2>
+    <input type="password" id="pass">
+    <button onclick="unlock()">Enter</button>
+</div>
+
+<!-- VIDEO -->
+<video autoplay muted loop>
+<source src="bg.mp4" type="video/mp4">
+</video>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mp3">
+</audio>
+
+<canvas id="fireworks"></canvas>
+
+<div class="container" id="main" style="display:none;">
+
+<div class="heart">💗</div>
+
+<h1>Happy 1 Year Anniversary</h1>
+<h2>Dulshan ❤️ Aveesha</h2>
+
+<p class="typing" id="typing"></p>
+
+<div id="counter"></div>
+
+<h3>Our Memories 📸</h3>
+<div class="gallery">
+<img src="img1.jpg">
+<img src="img2.jpg">
+<img src="img3.jpg">
+</div>
+
+<button onclick="playMusic()">Music 🎵</button>
+<button onclick="speak()">AI Voice 🎙</button>
+<button onclick="showSurprise()">Surprise 🎁</button>
+<button onclick="openLetter()">Love Letter 💌</button>
+
+<div id="surprise" style="display:none;">You are my forever 💖</div>
+
+</div>
+
+<!-- LETTER -->
+<div class="popup" id="letter">
+<h3>My Love 💕</h3>
+<p>You are my happiness, my peace, my everything. During this year we have so many argivements but we are still together. I love you soo much. stay with me. you are the only one who give me happiness. i have have soo many plans to do with you. stay with me. i will show you everything and i give you everythings to make you happy 💗.</p>
+<button onclick="closeLetter()">Close</button>
+</div>
+
+<script>
+// PASSWORD
+function unlock(){
+    if(document.getElementById("pass").value==="0428"){
+        document.getElementById("lock").style.display="none";
+        document.getElementById("main").style.display="block";
+    } else alert("Wrong password");
+}
+
+// TYPING
+let text="One year full of love, smiles, and memories 💕";
+let i=0;
+function type(){
+    if(i<text.length){
+        document.getElementById("typing").innerHTML+=text[i];
+        i++;
+        setTimeout(type,50);
+    }
+}
+type();
+
+// COUNTER
+let start=new Date("2025-04-28");
+let now=new Date();
+let days=Math.floor((now-start)/(1000*60*60*24));
+document.getElementById("counter").innerHTML="💘 "+days+" days together 💘";
+
+// MUSIC
+function playMusic(){
+    document.getElementById("music").play();
+}
+
+// AI VOICE
+function speak(){
+    let msg=new SpeechSynthesisUtterance(
+        "Happy one year anniversary my love.It’s hard to believe how fast this year went, but at the same time, every moment with you feels meaningful and unforgettable. You’ve been more than just my girlfriend — you’ve been my peace, my happiness, and someone who truly understands me.Through all the ups and downs, you stayed, and that means everything to me. I’m grateful for every memory we’ve made together, every laugh, every conversation, and even the small moments that no one else would notice.I don’t know what the future holds, but I know I want you in it. Thank you for being part of my life and making it better just by being in it.Here’s to us, and to many more years together.You are my everything. I love you forever."
+    );
+    msg.pitch=1.2;
+    msg.rate=0.9;
+    speechSynthesis.speak(msg);
+}
+
+// SURPRISE
+function showSurprise(){
+    document.getElementById("surprise").style.display="block";
+}
+
+// LETTER
+function openLetter(){
+    document.getElementById("letter").style.display="block";
+}
+function closeLetter(){
+    document.getElementById("letter").style.display="none";
+}
+
+// FIREWORKS
+const c=document.getElementById("fireworks");
+const ctx=c.getContext("2d");
+c.width=window.innerWidth;
+c.height=window.innerHeight;
+
+function fire(){
+    let x=Math.random()*c.width;
+    let y=Math.random()*c.height/2;
+    for(let i=0;i<25;i++){
+        ctx.beginPath();
+        ctx.arc(x+Math.random()*50,y+Math.random()*50,2,0,Math.PI*2);
+        ctx.fillStyle="white";
+        ctx.fill();
+    }
+}
+setInterval(fire,500);
+</script>
+
+</body>
+</html>
